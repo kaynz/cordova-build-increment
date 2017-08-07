@@ -1,34 +1,34 @@
 {
   "name": "cordova-build-increment",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Automated version number increment after cordova build for iOS, OS X, Android, and Windows",
   "main": "incrementBuildNum.js",
   "dependencies": {
-    "xml-writer": "^1.6.0",
-    "xml2js": "^0.4.10"
+    "xml-writer": "^1.7.0",
+    "xml2js": "^0.4.17"
   },
   "peerDependencies": {
-    "xml2js": "^0.4.10",
-    "xml-writer": "^1.6.0"
+    "xml2js": "^0.4.17",
+    "xml-writer": "^1.7.0"
   },
   "devDependencies": {},
   "scripts": {
     "postinstall": "node scripts/install.js",
     "postuninstall": "node scripts/uninstall.js"
   },
-  "author": "Charles Ring",
+  "author": "Volkan Gümüs",
   "license": "MIT",
   "directories": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cnring18/cordova-build-increment.git"
+    "url": "git+https://github.com/kaynz/cordova-build-increment"
   },
   "bugs": {
-    "url": "https://github.com/cnring18/cordova-build-increment/issues"
+    "url": "https://github.com/kaynz/cordova-build-increment/issues"
   },
-  "homepage": "https://github.com/cnring18/cordova-build-increment#readme",
+  "homepage": "https://github.com/kaynz/cordova-build-increment#readme",
   "keywords": [
     "ecosystem:cordova",
     "build",
