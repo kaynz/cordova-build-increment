@@ -12,10 +12,6 @@
     "xml-writer": "^1.7.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "postinstall": "node scripts/install.js",
-    "postuninstall": "node scripts/uninstall.js"
-  },
   "author": "Volkan Gümüs",
   "license": "MIT",
   "directories": {
