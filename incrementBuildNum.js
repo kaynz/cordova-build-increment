@@ -14,12 +14,12 @@ module.exports = function(context) {
         needRewrite = false,
         finishMessage = [];
     // hook configuration
-    var increment = !(cliCommand.indexOf('--no-inc') > -1),
+    var increment = cliCommand.indexOf('--inc') > -1,
         platformVersion = !(cliCommand.indexOf('--no-platform-inc') > -1),
         incrementVersion = (cliCommand.indexOf('--inc-version') > -1);
 
     if(!increment) {
-        console.log('--no-inc flag detected. No build increment executed.');
+        console.log('--inc flag not detected. No build increment executed.');
         return;
     }
 
