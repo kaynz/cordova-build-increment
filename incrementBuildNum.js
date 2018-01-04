@@ -8,60 +8,50 @@ module.exports = function (context) {
         return;
     }
 
-    var util = require('util'),
-        fs = require('fs'),
-        path = require('path'),
-        xml2js = require('xml2js');
+    var ConfigParser;
+
+    try {
+        // cordova-lib >= 5.3.4 doesn't contain ConfigParser and xml-helpers
+        ConfigParser = context.requireCordovaModule("cordova-common").ConfigParser;
+    } catch (e) {
+        ConfigParser = context.requireCordovaModule("cordova-lib/src/configparser/ConfigParser");
+    }
+
+    var path = require('path'),
+        projectConfigurationFile = path.join(context.opts.projectRoot, 'config.xml'),
+        cordovaConfig = new ConfigParser(projectConfigurationFile);
 
     var platforms = context.opts.platforms,
-        fileName = 'config.xml',
-        filePath = path.normalize(path.join(context.opts.projectRoot, fileName)),
-        parser = new xml2js.Parser(),
         changeVersion,
         platformName,
         needRewrite = false,
         finishMessage = [];
+
     // hook configuration
     var platformVersion = !(cliCommand.indexOf('--no-platform-inc') > -1),
         incrementVersion = (cliCommand.indexOf('--inc-version') > -1);
 
-    fs.readFile(filePath, {encoding: 'utf8'}, function (err, data) {
-        if (err) throw err;
-        parser.parseString(data, function (err, result) {
-            if (err) throw err;
+    parseConfig();
 
-            parseConfig(result);
-        });
-    });
-
-    function parseConfig(configOpts) {
+    function parseConfig() {
         if (platformVersion) {
             platforms.forEach(function (platform) {
-                if (setPlatformInfo(platform))
-                    configOpts = handleResult(configOpts);
+                if (setPlatformInfo(platform)){
+                    handleResult();
+                }
             });
         }
         if (incrementVersion) {
             changeVersion = 'version';
             platformName = 'App';
-            configOpts = handleResult(configOpts);
+            handleResult();
         }
 
         if (needRewrite) {
-            rewriteConfig(configOpts);
+            cordovaConfig.write();
         } else {
-            console.log(fileName + ' build numbers not changed');
+            console.log(projectConfigurationFile + ' build numbers not changed');
         }
-    }
-
-    function rewriteConfig(result) {
-        fs.writeFile(filePath, buildXML(result), {encoding: 'utf8'}, function (err) {
-            if (err) throw err;
-            finishMessage.push('Saved in ' + fileName);
-            finishMessage.forEach(function (line) {
-                console.log(line);
-            });
-        });
     }
 
     function setPlatformInfo(platform) {
@@ -89,12 +79,14 @@ module.exports = function (context) {
         return true;
     }
 
-    function handleResult(result) {
+    function handleResult() {
         var newVersion = null;
-        if (result.widget.$[changeVersion]) {
-            newVersion = processVersionCode(result.widget.$[changeVersion]);
-            if (newVersion) result.widget.$[changeVersion] = newVersion;
-            else finishMessage.push(platformName + ' version code still "' + result.widget.$[changeVersion] + '"');
+
+        var configVersion = cordovaConfig.getAttribute(changeVersion);
+        if (configVersion) {
+            newVersion = processVersionCode(configVersion);
+            if (newVersion) cordovaConfig.doc.getroot().attrib[changeVersion] = newVersion;
+            else finishMessage.push(platformName + ' version code still "' + configVersion + '"');
         } else {
             finishMessage.push(platformName + ' version code not found');
         }
@@ -102,14 +94,6 @@ module.exports = function (context) {
             needRewrite = true;
             finishMessage.push(platformName + ' build number incremented to "' + newVersion + '"');
         }
-        return result;
-    }
-
-    function buildXML(obj) {
-        var builder = new xml2js.Builder();
-        builder.options.renderOpts.indent = '\t';
-        var x = builder.buildObject(obj);
-        return x.toString();
     }
 
     function processVersionCode(code) {
@@ -138,4 +122,4 @@ module.exports = function (context) {
         }
         return code;
     }
-}
+};

@@ -3,14 +3,6 @@
   "version": "1.0.0",
   "description": "Automated version number increment after cordova build for iOS, OS X, Android, and Windows",
   "main": "incrementBuildNum.js",
-  "dependencies": {
-    "xml-writer": "^1.7.0",
-    "xml2js": "^0.4.17"
-  },
-  "peerDependencies": {
-    "xml2js": "^0.4.17",
-    "xml-writer": "^1.7.0"
-  },
   "devDependencies": {},
   "author": "Volkan Gümüs",
   "license": "MIT",
