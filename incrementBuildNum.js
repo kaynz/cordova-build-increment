@@ -1,6 +1,6 @@
-module.exports = function(context) {
+module.exports = function (context) {
     var util = require('util'),
-    	fs = require('fs'),
+        fs = require('fs'),
         path = require('path'),
         xml2js = require('xml2js');
 
@@ -18,15 +18,15 @@ module.exports = function(context) {
         platformVersion = !(cliCommand.indexOf('--no-platform-inc') > -1),
         incrementVersion = (cliCommand.indexOf('--inc-version') > -1);
 
-    if(!increment) {
+    if (!increment) {
         console.log('--inc flag not detected. No build increment executed.');
         return;
     }
 
-    fs.readFile(filePath, { encoding:'utf8' }, function(err, data) {
-        if(err) throw err;
+    fs.readFile(filePath, {encoding: 'utf8'}, function (err, data) {
+        if (err) throw err;
         parser.parseString(data, function (err, result) {
-            if(err) throw err;
+            if (err) throw err;
 
             parseConfig(result);
         });
@@ -35,17 +35,17 @@ module.exports = function(context) {
     function parseConfig(configOpts) {
         if (platformVersion) {
             platforms.forEach(function (platform) {
-                if(setPlatformInfo(platform))
+                if (setPlatformInfo(platform))
                     configOpts = handleResult(configOpts);
             });
-        } 
+        }
         if (incrementVersion) {
             changeVersion = 'version';
             platformName = 'App';
             configOpts = handleResult(configOpts);
         }
 
-        if(needRewrite) {
+        if (needRewrite) {
             rewriteConfig(configOpts);
         } else {
             console.log(fileName + ' build numbers not changed');
@@ -53,10 +53,12 @@ module.exports = function(context) {
     }
 
     function rewriteConfig(result) {
-        fs.writeFile(filePath, buildXML(result), { encoding:'utf8' }, function(err) {
-            if(err) throw err;
+        fs.writeFile(filePath, buildXML(result), {encoding: 'utf8'}, function (err) {
+            if (err) throw err;
             finishMessage.push('Saved in ' + fileName);
-            finishMessage.forEach( function(line) { console.log(line); } );
+            finishMessage.forEach(function (line) {
+                console.log(line);
+            });
         });
     }
 
@@ -86,15 +88,15 @@ module.exports = function(context) {
     }
 
     function handleResult(result) {
-        var newVersion =  null;
-        if(result.widget.$[changeVersion]) { 
+        var newVersion = null;
+        if (result.widget.$[changeVersion]) {
             newVersion = processVersionCode(result.widget.$[changeVersion]);
             if (newVersion) result.widget.$[changeVersion] = newVersion;
             else finishMessage.push(platformName + ' version code still "' + result.widget.$[changeVersion] + '"');
         } else {
             finishMessage.push(platformName + ' version code not found');
         }
-        if(newVersion) {
+        if (newVersion) {
             needRewrite = true;
             finishMessage.push(platformName + ' build number incremented to "' + newVersion + '"');
         }
@@ -116,7 +118,7 @@ module.exports = function(context) {
     }
 
     function newVersion(match, offset, original) {
-        if(!match) return null;
+        if (!match) return null;
         try {
             var l = match.length;
             match = parseInt(match) + 1;
@@ -129,7 +131,7 @@ module.exports = function(context) {
     function pad(code, origLen) {
         code = code.toString();
         if (code.length >= origLen) return code;
-        while(code.length < origLen) {
+        while (code.length < origLen) {
             code = '0' + code;
         }
         return code;
