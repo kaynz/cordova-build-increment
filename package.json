@@ -1,6 +1,6 @@
 {
-  "name": "cordova-build-increment",
-  "version": "1.0.0",
+  "name": "cordova-plugin-build-increment",
+  "version": "2.0.0",
   "description": "Automated version number increment after cordova build for iOS, OS X, Android, and Windows",
   "main": "incrementBuildNum.js",
   "devDependencies": {},
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kaynz/cordova-build-increment"
+    "url": "git+https://github.com/kaynz/cordova-plugin-build-increment"
   },
   "bugs": {
-    "url": "https://github.com/kaynz/cordova-build-increment/issues"
+    "url": "https://github.com/kaynz/cordova-plugin-build-increment/issues"
   },
-  "homepage": "https://github.com/kaynz/cordova-build-increment#readme",
+  "homepage": "https://github.com/kaynz/cordova-plugin-build-increment#readme",
   "keywords": [
     "ecosystem:cordova",
     "build",

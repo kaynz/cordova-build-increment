@@ -1,4 +1,4 @@
-# cordova-build-increment
+# cordova-plugin-build-increment
 
 Increment version tags using cordova build flags.
 
@@ -7,7 +7,7 @@ Tested up to cordova@8.0.0
 ## Install
 Install the following package below inside of your app's root folder.
 ```bash
-$ cordova plugin install cordova-build-increment
+$ cordova plugin install cordova-plugin-build-increment
 ```
 
 Script is designed to increment the `android-versionCode`, `ios-CFBundleVersion`, `osx-CFBundleVersion` and `windows-packageVersion` fields for additional versioning or simply the version tag in the config.xml file.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-build-increment" version="1.0.0">
-    <name>Cordova Build Increment</name>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-build-increment" version="2.0.0">
+    <name>Cordova Build Increment Tool</name>
     <description>Build Increment Tool for Cordova Applications</description>
     <license>Apache 2.0</license>
     <keywords>cordova</keywords>
