@@ -1,11 +1,19 @@
 module.exports = function (context) {
+
+    var cliCommand = context.cmdLine,
+        increment = cliCommand.indexOf('--inc') > -1;
+
+    if (!increment) {
+        console.log('--inc flag not detected. No build increment executed.');
+        return;
+    }
+
     var util = require('util'),
         fs = require('fs'),
         path = require('path'),
         xml2js = require('xml2js');
 
     var platforms = context.opts.platforms,
-        cliCommand = context.cmdLine,
         fileName = 'config.xml',
         filePath = path.normalize(path.join(context.opts.projectRoot, fileName)),
         parser = new xml2js.Parser(),
@@ -14,14 +22,8 @@ module.exports = function (context) {
         needRewrite = false,
         finishMessage = [];
     // hook configuration
-    var increment = cliCommand.indexOf('--inc') > -1,
-        platformVersion = !(cliCommand.indexOf('--no-platform-inc') > -1),
+    var platformVersion = !(cliCommand.indexOf('--no-platform-inc') > -1),
         incrementVersion = (cliCommand.indexOf('--inc-version') > -1);
-
-    if (!increment) {
-        console.log('--inc flag not detected. No build increment executed.');
-        return;
-    }
 
     fs.readFile(filePath, {encoding: 'utf8'}, function (err, data) {
         if (err) throw err;
@@ -113,7 +115,7 @@ module.exports = function (context) {
     function processVersionCode(code) {
         if (!code) return null;
         var newCode = code.replace(/[0-9]+$/, newVersion);
-        if (newCode == code) return null; //Version not changed, no match
+        if (newCode === code) return null; //Version not changed, no match
         return newCode;
     }
 
