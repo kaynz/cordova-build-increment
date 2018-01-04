@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-build-increment",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Automated version number increment after cordova build for iOS, OS X, Android, and Windows",
   "main": "incrementBuildNum.js",
   "devDependencies": {},
