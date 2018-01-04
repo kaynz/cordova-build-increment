@@ -1,32 +1,24 @@
 # cordova-build-increment
 
+Increment version tags using cordova build flags.
 
-### Release Notes
-
-v0.1.0 Added support for OS X with `osx-CFBundleVersion` tag. Added `version` tag increment. Added command line option flags
-
-Tested up to cordova@6.1.1
-
-See Usage section below for options flag info
-
+Tested up to cordova@8.0.0
 
 ## Install
 Install the following package below inside of your app's root folder.
 ```bash
-$ npm install cordova-build-increment
+$ cordova plugin install cordova-build-increment
 ```
 
 Script is designed to increment the `android-versionCode`, `ios-CFBundleVersion`, `osx-CFBundleVersion` and `windows-packageVersion` fields for additional versioning or simply the version tag in the config.xml file.
 
 ## Usage
 
-By default this hook is enabled for all builds and will increment platform specific version numbers.
-
-With v0.1.0 the hook now supports option flags so that the script itself does not need to be edited before use. It also allows for direct incrementing of the `version` tag.
+Version incrementing is disabled by default.
 
 Use the following option flags when executing `cordova build`:
 
-`--no-inc` - no increments processed for this build (overrides other option flags)
+`--inc` - increments are processed for this build
 
 `--inc-version` - the version tag will be incremented for this build
 
@@ -60,11 +52,3 @@ Use the following option flags when executing `cordova build`:
 ** Leading zeros not removed
 
 ** The hook will not currently increment any build versions without the formats above (i.e., non numeric version tags)
-
-
-### Release History
-
-v0.0.6 Minor error handling changes. Tested up to cordova 6.0.0
-
-v0.0.5 Supports versioning for Windows with 'windows-packageVersion' in config.xml
-
